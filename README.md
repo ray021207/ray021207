@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="assets/header.svg" alt="Reshma “Ray” Panibhate. AI that sees, reasons, and acts for people and the planet." width="100%">
+<img src="assets/header.svg" alt="Reshma Panibhate (Ray). AI that sees, reasons, and acts for people and the planet." width="100%">
 
 </div>
 
