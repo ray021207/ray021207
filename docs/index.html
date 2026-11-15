@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ray Panibhate · Work dashboard</title>
+<style>
+  :root{--forest:#1F3D2E;--surf:#264735;--moss:#6B7F4E;--sage:#A2B5A0;--sand:#DCC8A3;--river:#4C6A73;--earth:#5A4A3A;--cream:#F4EEE0;
+        --line:rgba(162,181,160,.22);--serif:Georgia,'Times New Roman',serif;--sans:-apple-system,'Segoe UI',Helvetica,Arial,sans-serif;
+        --health:#7FA3AE;--env:#8FA56A;--agents:#DCC8A3}
+  *{box-sizing:border-box}
+  body{margin:0;background:#16301F;background:linear-gradient(180deg,#183324,#14291d);color:var(--cream);font-family:var(--sans);line-height:1.5}
+  .wrap{max-width:1000px;margin:0 auto;padding:40px 20px 80px}
+  header{padding:8px 4px 28px}
+  .eyebrow{font-size:11px;letter-spacing:.26em;color:var(--sage);text-transform:uppercase}
+  h1{font:400 clamp(34px,6vw,52px)/1.1 var(--serif);color:var(--sand);margin:12px 0 10px}
+  .tag{font:italic 22px var(--serif);color:var(--cream);opacity:.9;margin:0}
+  .rule{width:96px;height:2px;background:var(--moss);margin:16px 0}
+  .links a{color:var(--sage);text-decoration:none;border-bottom:1px solid var(--line);margin-right:18px;font-size:14px}
+  .links a:hover{color:var(--sand);border-color:var(--sand)}
+  .chips{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 26px;position:sticky;top:0;padding:12px 0;background:linear-gradient(#16301F 70%,transparent);z-index:5}
+  .chip{background:none;border:1px solid var(--line);color:var(--sage);padding:7px 15px;border-radius:99px;font:13px var(--sans);cursor:pointer;transition:.2s}
+  .chip:hover{color:var(--sand);border-color:var(--sand)}
+  .chip[aria-pressed=true]{background:var(--sand);color:var(--forest);border-color:var(--sand)}
+  .chip i{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:8px;vertical-align:middle}
+  section{background:var(--forest);border:1px solid var(--line);border-radius:18px;padding:28px 30px;margin-bottom:18px}
+  h2{font:400 24px var(--serif);color:var(--sand);margin:0 0 4px}
+  .sub{font-size:12.5px;color:var(--sage);margin:0 0 20px}
+  /* bars */
+  .grp{margin:0 0 22px;transition:opacity .35s}
+  .grp.dim{opacity:.18}
+  .grp h3{font:italic 16px var(--serif);color:var(--sage);margin:0 0 10px;font-weight:400}
+  .row{display:grid;grid-template-columns:230px 1fr 70px;gap:14px;align-items:center;padding:7px 0;cursor:default}
+  .row .lab{font-size:13px}
+  .track{height:8px;border-radius:4px;background:rgba(255,255,255,.08);overflow:hidden}
+  .fill{height:100%;width:0;border-radius:4px;background:var(--sage);opacity:.55;transition:width 1.4s cubic-bezier(.2,.8,.2,1),opacity .2s}
+  .fill.hi{background:var(--sand);opacity:1}
+  .row:hover .fill{opacity:1}
+  .val{font:18px var(--serif);text-align:right}
+  .tip{position:fixed;pointer-events:none;background:#0f2218;border:1px solid var(--line);color:var(--cream);padding:9px 12px;border-radius:10px;font-size:12.5px;max-width:260px;opacity:0;transition:opacity .15s;z-index:20}
+  /* donut */
+  .split{display:grid;grid-template-columns:260px 1fr;gap:30px;align-items:center}
+  .legend{display:grid;gap:4px}
+  .lg{display:flex;align-items:center;gap:10px;padding:6px 8px;border-radius:8px;font-size:13.5px;cursor:default;transition:.2s}
+  .lg:hover,.lg.on{background:rgba(255,255,255,.06)}
+  .lg i{width:9px;height:9px;border-radius:50%}
+  .lg b{margin-left:auto;font:500 13px var(--sans);color:var(--sand)}
+  .lg small{color:var(--sage);margin-left:8px;width:62px;text-align:right}
+  svg text{font-family:var(--sans)}
+  /* timeline */
+  .tl{width:100%;height:auto;overflow:visible}
+  .dot{cursor:pointer;transition:opacity .3s}
+  .dot circle{transition:r .2s}
+  .dot:hover circle.c{r:9}
+  .detail{margin-top:10px;border-top:1px solid var(--line);padding-top:16px;min-height:96px}
+  .detail h4{font:400 20px var(--serif);color:var(--sand);margin:0 0 4px}
+  .detail p{margin:6px 0 10px;font-size:14px;color:var(--cream);opacity:.92;max-width:680px}
+  .tags{font-size:12px;letter-spacing:.04em;color:var(--sage)}
+  .go{color:var(--sand);font-size:13px;text-decoration:none;border-bottom:1px solid var(--line)}
+  /* cards */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:12px}
+  .card{position:relative;background:var(--surf);border:1px solid var(--line);border-radius:14px;padding:18px 18px 16px;cursor:pointer;transition:transform .25s,opacity .35s,border-color .2s}
+  .card:hover{transform:translateY(-3px);border-color:rgba(220,200,163,.5)}
+  .card.hide{display:none}
+  .card:before{content:"";position:absolute;left:0;top:20px;width:3px;height:34px;border-radius:2px;background:var(--c)}
+  .card h4{font:400 19px var(--serif);color:var(--sand);margin:0}
+  .card .when{font-size:11.5px;color:var(--sage);margin:2px 0 8px}
+  .card p{font-size:13px;margin:0;max-height:0;overflow:hidden;opacity:0;transition:max-height .35s,opacity .35s,margin .35s}
+  .card.open p{max-height:140px;opacity:.92;margin:6px 0 10px}
+  .card .go{display:none}
+  .card.open .go{display:inline-block}
+  .foot{color:var(--sage);font-size:12px;text-align:center;margin-top:30px}
+  @media (max-width:700px){.row{grid-template-columns:1fr 60px}.row .track{grid-column:1/-1;order:3}.split{grid-template-columns:1fr}}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">M.S. Robotics &amp; Autonomous Systems (AI) · Arizona State University</div>
+    <h1>Reshma “Ray” Panibhate</h1>
+    <p class="tag">AI that sees, reasons, and acts for people and the planet.</p>
+    <div class="rule"></div>
+    <div class="links"><a href="https://github.com/ray021207">GitHub</a><a href="https://ray021207.github.io">Portfolio</a><a href="https://www.linkedin.com/in/reshmapanibhate">LinkedIn</a></div>
+  </header>
+
+  <div class="chips" id="chips" role="group" aria-label="Filter by field"></div>
+
+  <section aria-labelledby="r">
+    <h2 id="r">Numbers I stand behind</h2>
+    <p class="sub">Hover a bar for the detail. Every stage ends in a measurement, including the ones that went the wrong way.</p>
+    <div id="bars"></div>
+  </section>
+
+  <section aria-labelledby="t">
+    <h2 id="t">A year and a half, in order</h2>
+    <p class="sub">Click a point. Projects by last push, January 2025 to November 2026.</p>
+    <svg class="tl" id="tl" viewBox="0 0 940 150" role="img" aria-label="Project timeline"></svg>
+    <div class="detail" id="detail"></div>
+  </section>
+
+  <section aria-labelledby="l">
+    <h2 id="l">What I write in</h2>
+    <p class="sub">Source files by language across <span id="nrepos"></span> public repos. Counted, not guessed. Hover a slice or a name.</p>
+    <div class="split"><svg id="donut" viewBox="0 0 220 220" width="240" height="240" role="img" aria-label="Language mix"></svg><div class="legend" id="legend"></div></div>
+  </section>
+
+  <section aria-labelledby="p">
+    <h2 id="p">Selected work</h2>
+    <p class="sub">Click a card to open it. The chips above filter everything on this page.</p>
+    <div class="grid" id="grid"></div>
+  </section>
+  <div class="foot">Open to perception, computer vision &amp; ML roles · Tempe, AZ · open to relocation</div>
+</div>
+<div class="tip" id="tip"></div>
+<script>
+const DATA = {"projects": [{"id": "fruit", "name": "Fruit grading", "field": "health", "date": "2025-01", "label": "Jan 2025", "link": "https://github.com/ray021207/fruit-grading-system", "blurb": "Deployed CNN pipeline that grades fruit condition from a photo. My undergraduate thesis, published first-author in IOSR-JCE.", "tags": ["TensorFlow", "InceptionV3", "Flask"]}, {"id": "injury", "name": "Athlete injury risk", "field": "health", "date": "2025-05", "label": "May 2025", "link": "https://github.com/ray021207/Comparative-Study-of-Approaches-for-Injury-Risk-Prediction-in-Athletes", "blurb": "Five models on 50 Hz wearable data. One scored 100%, which turned out to be a leak: windows from the same subject sat on both sides of the split.", "tags": ["1D CNN", "MHEALTH", "Random Forest"]}, {"id": "chexpert", "name": "CheXpert + medical imaging", "field": "health", "date": "2025-12", "label": "Dec 2025", "link": "https://github.com/ray021207/CSE507_CheXpert_InternImage", "blurb": "Multi-label chest X-ray classification on 174k radiographs, plus nine hands-on imaging exercises (U-Net, autoencoder, clustering).", "tags": ["PyTorch", "InternImage", "CheXpert"]}, {"id": "clarity", "name": "Clarity", "field": "agents", "date": "2026-03", "label": "Mar 2026", "link": "https://github.com/ray021207/Clarity", "blurb": "Intercepts LLM calls and returns a 0 to 100 trust score from a multi-agent verification pipeline.", "tags": ["LangGraph", "FastAPI", "Anthropic SDK"]}, {"id": "recoveryiq", "name": "RecoveryIQ", "field": "health", "date": "2026-04", "label": "Apr 2026", "link": "https://github.com/ray021207/GlobeHack_Hydrawav3_RecoveryIQ", "blurb": "Dual-role recovery platform: patients get ROM scans and check-ins, practitioners get assessments and AI clinical summaries.", "tags": ["Next.js 16", "TypeScript", "Pose detection"]}, {"id": "wastewise", "name": "WasteWise", "field": "env", "date": "2026-09a", "label": "Sep 2026", "link": "https://github.com/ray021207/WasteWise", "blurb": "Snap an item; Claude reasons about it and returns disposal rules for your own city. Built at the Visual AI Hackathon @ ASU.", "tags": ["Claude", "FiftyOne", "Python"]}, {"id": "glacious", "name": "Glacious", "field": "env", "date": "2026-09b", "label": "Sep 2026", "link": "https://github.com/ray021207/Glacious", "blurb": "Satellite climate intelligence for Alpine journalists: verify climate claims against satellite evidence.", "tags": ["Streamlit", "Plotly", "Folium"]}, {"id": "species", "name": "Native vs invasive", "field": "env", "date": "2026-09c", "label": "Sep 2026", "link": "https://github.com/ray021207/Comparitive-Study-for-Native-Invasive-species", "blurb": "BioCLIP, SpeciesNet and DINOv2 compared, then tested on Hawai'i, an island ecosystem none of them had seen.", "tags": ["BioCLIP", "SpeciesNet", "DINOv2", "FAISS"]}, {"id": "kind", "name": "kin&d", "field": "agents", "date": "2026-10", "label": "Oct 2026", "link": "https://github.com/ray021207/HacksForHumanity", "blurb": "A parent describes a moment and gets 3 to 5 conversation starters. No chat, by design.", "tags": ["Next.js", "TypeScript", "Claude API"]}, {"id": "sink", "name": "Sinkronized", "field": "env", "date": "2026-11", "label": "Nov 2026", "link": "https://github.com/ray021207/NASA-Hackathon", "blurb": "NASA Space Apps 2026. NISAR L-band radar measures where central Arizona is sinking, and what sits on top.", "tags": ["NISAR", "InSAR", "Python"]}, {"id": "grapheqa", "name": "GraphEQA", "field": "agents", "date": null, "label": "2026", "link": "https://ray021207.github.io/projects/graph-eqa.html", "blurb": "An agent explores a house it has never seen and answers questions about it. Baseline was confidently wrong in 59% of runs.", "tags": ["PyTorch", "Habitat Sim", "SigLIP2", "Claude API"]}, {"id": "webarena", "name": "LLM agent evaluation", "field": "agents", "date": null, "label": "2024", "link": "https://ray021207.github.io/projects/webarena-deontic.html", "blurb": "Added must / may / must-not rules to WebArena and measured where GPT-4o breaks them.", "tags": ["WebArena", "GPT-4o", "Agent eval"]}], "results": [{"group": "Native vs invasive species (accuracy)", "field": "env", "rows": [{"label": "Majority-class baseline", "v": 60.0, "max": 100, "fmt": "60.0%", "tip": "Always guessing the commonest label."}, {"label": "BioCLIP, zero-shot", "v": 84.2, "max": 100, "fmt": "84.2%", "tip": "Country-restricted lookup with a hand-curated native/invasive table."}, {"label": "SpeciesNet, fine-tuned head", "v": 97.34, "max": 100, "fmt": "97.34%", "hi": true, "tip": "+13.1 points over BioCLIP on the validation pass."}]}, {"group": "Chest X-ray, 174k radiographs (AUROC)", "field": "health", "rows": [{"label": "DINOv2 localisation head", "v": 0.48, "max": 1, "fmt": "≈ 0.48", "tip": "Reported as is: it underperforms."}, {"label": "Multi-label classifier", "v": 0.8, "max": 1, "fmt": "≈ 0.80", "hi": true, "tip": "Stable under a patient-level 80/20 split, where the official split misleads."}]}, {"group": "Agents and robots", "field": "agents", "rows": [{"label": "Baseline confidently wrong", "v": 59, "max": 100, "fmt": "59%", "tip": "Share of baseline embodied-QA episodes answered confidently wrong (GraphEQA)."}, {"label": "Path efficiency gain", "v": 20, "max": 100, "fmt": "~20%", "hi": true, "tip": "A*-progress reward shaping on a TurtleBot in Gazebo."}]}], "langs": [{"name": "TypeScript", "files": 127}, {"name": "Python", "files": 90}, {"name": "HTML / CSS", "files": 17}, {"name": "JavaScript", "files": 11}, {"name": "Jupyter", "files": 2}, {"name": "Shell", "files": 2}], "repos": 12};
+const FIELDS=[["all","All"],["health","Health & medical AI"],["env","Environment & sustainability"],["agents","LLM & agent products"]];
+const COL={health:"var(--health)",env:"var(--env)",agents:"var(--agents)"};
+const LCOL=["#DCC8A3","#A2B5A0","#6B7F4E","#4C6A73","#8C8574","#6F6A5A"];
+let field="all", sel="sinkronized-default";
+const $=s=>document.querySelector(s), tip=$("#tip");
+const el=(t,a={},h="")=>{const e=document.createElement(t);for(const k in a)e.setAttribute(k,a[k]);e.innerHTML=h;return e};
+const showTip=(e,t)=>{tip.textContent=t;tip.style.opacity=1;const x=Math.min(e.clientX+14,innerWidth-280);tip.style.left=x+"px";tip.style.top=(e.clientY+14)+"px"};
+const hideTip=()=>tip.style.opacity=0;
+
+/* chips */
+FIELDS.forEach(([k,l])=>{const b=el("button",{class:"chip","aria-pressed":k===field,"data-k":k},(k==="all"?"":`<i style="background:${COL[k]}"></i>`)+l);
+  b.onclick=()=>{field=k;document.querySelectorAll(".chip").forEach(c=>c.setAttribute("aria-pressed",c.dataset.k===k));render()};$("#chips").append(b)});
+
+/* bars */
+function bars(){
+  const box=$("#bars");box.innerHTML="";
+  DATA.results.forEach(g=>{
+    const d=el("div",{class:"grp"+(field!=="all"&&g.field!==field?" dim":"")},`<h3>${g.group}</h3>`);
+    g.rows.forEach(r=>{
+      const row=el("div",{class:"row"},`<div class="lab">${r.label}</div><div class="track"><div class="fill${r.hi?" hi":""}"></div></div><div class="val">${r.fmt}</div>`);
+      row.onmousemove=e=>showTip(e,r.tip);row.onmouseleave=hideTip;d.append(row);
+      requestAnimationFrame(()=>requestAnimationFrame(()=>row.querySelector(".fill").style.width=(100*r.v/r.max)+"%"));
+    });box.append(d)});
+}
+
+/* timeline */
+function timeline(){
+  const items=DATA.projects.filter(p=>p.date).sort((a,b)=>a.date.localeCompare(b.date));
+  const svg=$("#tl");svg.innerHTML="";const ns="http://www.w3.org/2000/svg";
+  const mk=(t,a,h)=>{const e=document.createElementNS(ns,t);for(const k in a)e.setAttribute(k,a[k]);if(h)e.textContent=h;return e};
+  svg.append(mk("line",{x1:30,y1:75,x2:910,y2:75,stroke:"#A2B5A0","stroke-opacity":.35,"stroke-width":1.5}));
+  items.forEach((p,i)=>{
+    const x=50+(840)*i/(items.length-1),side=i%2?-1:1,on=field==="all"||p.field===field,act=p.id===sel;
+    const g=mk("g",{class:"dot",opacity:on?1:.18,tabindex:0,role:"button","aria-label":p.name});
+    g.append(mk("rect",{x:x-46,y:side>0?58:2,width:92,height:90,fill:"transparent"}));
+    g.append(mk("line",{x1:x,y1:75,x2:x,y2:75+side*18,stroke:"#A2B5A0","stroke-opacity":.5}));
+    g.append(mk("circle",{class:"c",cx:x,cy:75,r:act?8:5.5,fill:act?"#DCC8A3":"#1F3D2E",stroke:p.field==="health"?"#7FA3AE":p.field==="env"?"#8FA56A":"#DCC8A3","stroke-width":2}));
+    g.append(mk("text",{x,y:75+side*38,"text-anchor":"middle","font-size":12.5,fill:"#F4EEE0",style:"font-family:Georgia,serif"},p.name));
+    g.append(mk("text",{x,y:75+side*38+14,"text-anchor":"middle","font-size":10.5,fill:"#A2B5A0"},p.label));
+    const pick=()=>{sel=p.id;timeline();detail()};g.onclick=pick;g.onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();pick()}};
+    svg.append(g)});
+}
+function detail(){
+  const p=DATA.projects.find(x=>x.id===sel)||DATA.projects.find(x=>x.id==="sink");
+  $("#detail").innerHTML=`<h4>${p.name}</h4><div class="tags">${p.label} · ${p.tags.join(" · ")}</div><p>${p.blurb}</p><a class="go" href="${p.link}">Open ↗</a>`;
+}
+
+/* donut */
+function donut(){
+  const L=DATA.langs,tot=L.reduce((a,b)=>a+b.files,0),svg=$("#donut"),ns="http://www.w3.org/2000/svg",R=82,C=2*Math.PI*R;
+  svg.innerHTML="";$("#nrepos").textContent=DATA.repos;$("#legend").innerHTML="";
+  const center=document.createElementNS(ns,"text");center.setAttribute("x",110);center.setAttribute("y",112);center.setAttribute("text-anchor","middle");
+  center.setAttribute("fill","#DCC8A3");center.setAttribute("font-size","26");center.style.fontFamily="Georgia,serif";
+  const c2=document.createElementNS(ns,"text");c2.setAttribute("x",110);c2.setAttribute("y",132);c2.setAttribute("text-anchor","middle");c2.setAttribute("fill","#A2B5A0");c2.setAttribute("font-size","11");
+  const reset=()=>{center.textContent=tot;c2.textContent="files";svg.querySelectorAll("circle.s").forEach(s=>s.style.opacity=1);document.querySelectorAll(".lg").forEach(x=>x.classList.remove("on"))};
+  let off=0;
+  L.forEach((l,i)=>{
+    const len=C*l.files/tot,s=document.createElementNS(ns,"circle");
+    s.setAttribute("class","s");s.setAttribute("cx",110);s.setAttribute("cy",110);s.setAttribute("r",R);s.setAttribute("fill","none");
+    s.setAttribute("stroke",LCOL[i]);s.setAttribute("stroke-width",22);s.setAttribute("stroke-dasharray",`0 ${C}`);s.setAttribute("stroke-dashoffset",-off);
+    s.setAttribute("transform","rotate(-90 110 110)");s.style.transition="stroke-dasharray 1.2s ease, opacity .2s";
+    setTimeout(()=>s.setAttribute("stroke-dasharray",`${Math.max(len-2,0.5)} ${C}`),80+i*120);
+    const lg=el("div",{class:"lg"},`<i style="background:${LCOL[i]}"></i>${l.name}<b>${Math.round(100*l.files/tot)}%</b><small>${l.files} files</small>`);
+    const on=()=>{reset();svg.querySelectorAll("circle.s").forEach((x,j)=>x.style.opacity=j===i?1:.25);lg.classList.add("on");center.textContent=Math.round(100*l.files/tot)+"%";c2.textContent=l.name};
+    s.onmouseenter=on;lg.onmouseenter=on;s.onmouseleave=reset;lg.onmouseleave=reset;
+    svg.append(s);$("#legend").append(lg);off+=len});
+  svg.append(center,c2);reset();
+}
+
+/* cards */
+function cards(){
+  const g=$("#grid");g.innerHTML="";
+  DATA.projects.forEach(p=>{
+    const on=field==="all"||p.field===field;
+    const c=el("div",{class:"card"+(on?"":" hide"),style:`--c:${COL[p.field]}`,tabindex:0,role:"button","aria-expanded":"false"},
+      `<h4>${p.name}</h4><div class="when">${p.label} · ${FIELDS.find(f=>f[0]===p.field)[1]}</div><p>${p.blurb}</p><div class="tags">${p.tags.join(" · ")}</div><a class="go" href="${p.link}" style="margin-top:8px">Open ↗</a>`);
+    const t=()=>{const o=c.classList.toggle("open");c.setAttribute("aria-expanded",o)};
+    c.onclick=e=>{if(e.target.tagName!=="A")t()};c.onkeydown=e=>{if(e.key==="Enter"){t()}};g.append(c)});
+}
+function render(){bars();timeline();detail();cards()}
+sel="sink";render();donut();
+</script>
+</body>
+</html>
