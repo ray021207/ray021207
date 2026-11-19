@@ -12,7 +12,7 @@ My habit with any result is to try to break it: re-split the data, change one va
 
 <div align="center">
 
-[Interactive dashboard](https://ray021207.github.io/ray021207/) &nbsp;·&nbsp; [Portfolio](https://ray021207.github.io) &nbsp;·&nbsp; [LinkedIn](https://www.linkedin.com/in/reshmapanibhate) &nbsp;·&nbsp; [Sinkronized, live](https://sinkronized.vercel.app) &nbsp;·&nbsp; [Glacious, live](https://glacious.streamlit.app/)
+[Portfolio](https://ray021207.github.io) &nbsp;·&nbsp; [LinkedIn](https://www.linkedin.com/in/reshmapanibhate) &nbsp;·&nbsp; [Sinkronized, live](https://sinkronized.vercel.app) &nbsp;·&nbsp; [Glacious, live](https://glacious.streamlit.app/)
 
 <br>
 
@@ -22,65 +22,47 @@ My habit with any result is to try to break it: re-split the data, change one va
 
 ## Selected work
 
-<sub>Open or close each field. Cards link to the code or case study.</sub>
-
-<details open>
-<summary><img src="assets/section_health.svg" alt="Health and medical AI" width="97%"></summary>
+<a href="https://ray021207.github.io/ray021207/"><img src="assets/explore.svg" alt="Explore the projects interactively on the dashboard" width="100%"></a>
 
 <div align="center">
 
-<table>
-<tr>
-<td><a href="https://github.com/ray021207/GlobeHack_Hydrawav3_RecoveryIQ"><img src="assets/card_recoveryiq.svg" alt="RecoveryIQ: recovery platform with pose detection" width="480"></a></td>
-<td><a href="https://github.com/ray021207/CSE507_CheXpert_InternImage"><img src="assets/card_chexpert.svg" alt="CheXpert InternImage: multi-label chest X-ray classification" width="480"></a></td>
-</tr>
-<tr>
-<td><a href="https://github.com/ray021207/Comparative-Study-of-Approaches-for-Injury-Risk-Prediction-in-Athletes"><img src="assets/card_injury.svg" alt="Athlete injury risk: five models on wearable data" width="480"></a></td>
-<td><a href="https://github.com/ray021207/Medical_Image_processing"><img src="assets/card_medimg.svg" alt="Medical image processing: nine imaging exercises" width="480"></a></td>
-</tr>
-</table>
+<sub>Jump straight to a field: &nbsp; <a href="https://ray021207.github.io/ray021207/#health">Health</a> &nbsp;·&nbsp; <a href="https://ray021207.github.io/ray021207/#env">Environment</a> &nbsp;·&nbsp; <a href="https://ray021207.github.io/ray021207/#agents">LLM &amp; agents</a></sub>
 
 </div>
+
+<details open>
+<summary><b>Health &amp; medical AI</b> &nbsp;·&nbsp; RecoveryIQ, CheXpert, athlete injury risk, medical imaging</summary>
+
+<br>
+
+- **[RecoveryIQ](https://github.com/ray021207/GlobeHack_Hydrawav3_RecoveryIQ)** · GlobeHacks 2026. Recovery platform for patients and practitioners, with live pose detection and AI clinical summaries. `Next.js` `TypeScript`
+- **[CheXpert · InternImage](https://github.com/ray021207/CSE507_CheXpert_InternImage)** · Multi-label chest X-ray classification on 174k radiographs, about 0.80 AUROC under a patient-level split. `PyTorch` `InternImage`
+- **[Athlete injury risk](https://github.com/ray021207/Comparative-Study-of-Approaches-for-Injury-Risk-Prediction-in-Athletes)** · Five models on wearable data; the one that scored 100% turned out to be a leak. `1D CNN` `Random Forest`
+- **[Medical image processing](https://github.com/ray021207/Medical_Image_processing)** · Nine imaging exercises: U-Net lung segmentation, autoencoder anomaly detection, ResNet clustering. `U-Net` `ResNet`
 
 </details>
 
-<details open>
-<summary><img src="assets/section_env.svg" alt="Environment and sustainability" width="97%"></summary>
+<details>
+<summary><b>Environment &amp; sustainability</b> &nbsp;·&nbsp; Sinkronized, Glacious, WasteWise, native vs invasive species</summary>
 
-<div align="center">
+<br>
 
-<table>
-<tr>
-<td><a href="https://github.com/ray021207/NASA-Hackathon"><img src="assets/card_sinkronized.svg" alt="Sinkronized: NISAR radar maps where central Arizona is sinking" width="480"></a></td>
-<td><a href="https://github.com/ray021207/Glacious"><img src="assets/card_glacious.svg" alt="Glacious: satellite climate intelligence for journalists" width="480"></a></td>
-</tr>
-<tr>
-<td><a href="https://github.com/ray021207/WasteWise"><img src="assets/card_wastewise.svg" alt="WasteWise: Claude reasons about waste and gives local disposal rules" width="480"></a></td>
-<td><a href="https://github.com/ray021207/Comparitive-Study-for-Native-Invasive-species"><img src="assets/card_species.svg" alt="Native vs invasive: camera-trap classifier tested on an unseen island" width="480"></a></td>
-</tr>
-</table>
-
-</div>
+- **[Sinkronized](https://github.com/ray021207/NASA-Hackathon)** · NASA Space Apps 2026. NISAR radar maps where central Arizona is sinking; 0.98 to 0.99 correlation with ADWR in SE Arizona. `NISAR` `InSAR` `Python`
+- **[Glacious](https://github.com/ray021207/Glacious)** · Satellite climate intelligence for Alpine journalists, live as a Streamlit dashboard. `Streamlit` `Plotly` `Folium`
+- **[WasteWise](https://github.com/ray021207/WasteWise)** · Snap an item and get Claude's disposal rules for your own city. Visual AI Hackathon @ ASU. `Claude` `FiftyOne`
+- **[Native vs invasive species](https://github.com/ray021207/Comparitive-Study-for-Native-Invasive-species)** · BioCLIP, SpeciesNet and DINOv2 on camera traps, tested on an island none had seen: 97.34% with a fine-tuned SpeciesNet head. `BioCLIP` `DINOv2` `FAISS`
 
 </details>
 
-<details open>
-<summary><img src="assets/section_agents.svg" alt="LLM and agent products" width="97%"></summary>
+<details>
+<summary><b>LLM &amp; agent products</b> &nbsp;·&nbsp; kin&amp;d, Clarity, GraphEQA, LLM agent evaluation</summary>
 
-<div align="center">
+<br>
 
-<table>
-<tr>
-<td><a href="https://github.com/ray021207/HacksForHumanity"><img src="assets/card_kind.svg" alt="kin&amp;d: conversation starters for parents, no chat" width="480"></a></td>
-<td><a href="https://github.com/ray021207/Clarity"><img src="assets/card_clarity.svg" alt="Clarity: a trust layer for LLM output" width="480"></a></td>
-</tr>
-<tr>
-<td><a href="https://ray021207.github.io/projects/graph-eqa.html"><img src="assets/card_grapheqa.svg" alt="GraphEQA: embodied question answering agent (case study)" width="480"></a></td>
-<td><a href="https://ray021207.github.io/projects/webarena-deontic.html"><img src="assets/card_webarena.svg" alt="LLM agent evaluation on WebArena (case study)" width="480"></a></td>
-</tr>
-</table>
-
-</div>
+- **[kin&amp;d](https://github.com/ray021207/HacksForHumanity)** · Hacks for Humanity. A parent describes a moment and gets 3 to 5 conversation starters. No chat, by design. `Next.js` `Claude API`
+- **[Clarity](https://github.com/ray021207/Clarity)** · Trust layer that scores every LLM call from 0 to 100 using a multi-agent check. `LangGraph` `FastAPI`
+- **[GraphEQA](https://ray021207.github.io/projects/graph-eqa.html)** · An agent explores a house it has never seen; the baseline was confidently wrong in 59% of runs. `Habitat Sim` `SigLIP2`
+- **[LLM agent evaluation](https://ray021207.github.io/projects/webarena-deontic.html)** · Must / may / must-not rules added to WebArena to measure where GPT-4o breaks them. `WebArena` `GPT-4o`
 
 </details>
 

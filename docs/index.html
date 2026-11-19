@@ -3,199 +3,282 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Ray Panibhate · Work dashboard</title>
+<title>Reshma Panibhate (Ray) · Projects</title>
 <style>
-  :root{--forest:#DCE4D8;--surf:#EEF2EA;--moss:#5E7352;--sage:#6B7D63;--sand:#5E7352;--river:#6F8E96;--earth:#5A4A3A;--cream:#26372D;
-        --line:rgba(124,146,121,.35);--serif:Georgia,'Times New Roman',serif;--sans:-apple-system,'Segoe UI',Helvetica,Arial,sans-serif;
-        --health:#6F8E96;--env:#7C9279;--agents:#D9C7A0}
-  *{box-sizing:border-box}
-  body{margin:0;background:#EEF2EA;color:var(--cream);font-family:var(--sans);line-height:1.5}
-  .wrap{max-width:1000px;margin:0 auto;padding:40px 20px 80px}
-  header{padding:8px 4px 28px}
-  .eyebrow{font-size:11px;letter-spacing:.26em;color:var(--sage);text-transform:uppercase}
-  h1{font:400 clamp(34px,6vw,52px)/1.1 var(--serif);color:var(--sand);margin:12px 0 10px}
-  .tag{font:italic 22px var(--serif);color:var(--cream);opacity:.9;margin:0}
-  .rule{width:96px;height:2px;background:var(--moss);margin:16px 0}
-  .links a{color:var(--sage);text-decoration:none;border-bottom:1px solid var(--line);margin-right:18px;font-size:14px}
-  .links a:hover{color:var(--sand);border-color:var(--sand)}
-  .chips{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 26px;position:sticky;top:0;padding:12px 0;background:linear-gradient(#EEF2EA 70%,transparent);z-index:5}
-  .chip{background:none;border:1px solid var(--line);color:var(--sage);padding:7px 15px;border-radius:99px;font:13px var(--sans);cursor:pointer;transition:.2s}
-  .chip:hover{color:var(--sand);border-color:var(--sand)}
-  .chip[aria-pressed=true]{background:#5E7352;color:#EEF2EA;border-color:#5E7352}
-  .chip i{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:8px;vertical-align:middle}
-  section{background:var(--forest);border:1px solid var(--line);border-radius:18px;padding:28px 30px;margin-bottom:18px}
-  h2{font:400 24px var(--serif);color:var(--sand);margin:0 0 4px}
-  .sub{font-size:12.5px;color:var(--sage);margin:0 0 20px}
-  /* bars */
-  .grp{margin:0 0 22px;transition:opacity .35s}
-  .grp.dim{opacity:.18}
-  .grp h3{font:italic 16px var(--serif);color:var(--sage);margin:0 0 10px;font-weight:400}
-  .row{display:grid;grid-template-columns:230px 1fr 70px;gap:14px;align-items:center;padding:7px 0;cursor:default}
-  .row .lab{font-size:13px}
-  .track{height:8px;border-radius:4px;background:rgba(38,55,45,.1);overflow:hidden}
-  .fill{height:100%;width:0;border-radius:4px;background:#A2B5A0;opacity:.9;transition:width 1.4s cubic-bezier(.2,.8,.2,1),opacity .2s}
-  .fill.hi{background:#5E7352;opacity:1}
-  .row:hover .fill{opacity:1}
-  .val{font:18px var(--serif);text-align:right}
-  .tip{position:fixed;pointer-events:none;background:#26372D;border:1px solid var(--line);color:#EEF2EA;padding:9px 12px;border-radius:10px;font-size:12.5px;max-width:260px;opacity:0;transition:opacity .15s;z-index:20}
-  /* donut */
-  .split{display:grid;grid-template-columns:260px 1fr;gap:30px;align-items:center}
-  .legend{display:grid;gap:4px}
-  .lg{display:flex;align-items:center;gap:10px;padding:6px 8px;border-radius:8px;font-size:13.5px;cursor:default;transition:.2s}
-  .lg:hover,.lg.on{background:rgba(38,55,45,.07)}
-  .lg i{width:9px;height:9px;border-radius:50%}
-  .lg b{margin-left:auto;font:500 13px var(--sans);color:var(--sand)}
-  .lg small{color:var(--sage);margin-left:8px;width:62px;text-align:right}
-  svg text{font-family:var(--sans)}
-  /* timeline */
-  .tl{width:100%;height:auto;overflow:visible}
-  .dot{cursor:pointer;transition:opacity .3s}
-  .dot circle{transition:r .2s}
-  .dot:hover circle.c{r:9}
-  .detail{margin-top:10px;border-top:1px solid var(--line);padding-top:16px;min-height:96px}
-  .detail h4{font:400 20px var(--serif);color:var(--sand);margin:0 0 4px}
-  .detail p{margin:6px 0 10px;font-size:14px;color:var(--cream);opacity:.92;max-width:680px}
-  .tags{font-size:12px;letter-spacing:.04em;color:var(--sage)}
-  .go{color:var(--sand);font-size:13px;text-decoration:none;border-bottom:1px solid var(--line)}
-  /* cards */
-  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:12px}
-  .card{position:relative;background:var(--surf);border:1px solid var(--line);border-radius:14px;padding:18px 18px 16px;cursor:pointer;transition:transform .25s,opacity .35s,border-color .2s}
-  .card:hover{transform:translateY(-3px);border-color:#7C9279}
-  .card.hide{display:none}
-  .card:before{content:"";position:absolute;left:0;top:20px;width:3px;height:34px;border-radius:2px;background:var(--c)}
-  .card h4{font:400 19px var(--serif);color:var(--sand);margin:0}
-  .card .when{font-size:11.5px;color:var(--sage);margin:2px 0 8px}
-  .card p{font-size:13px;margin:0;max-height:0;overflow:hidden;opacity:0;transition:max-height .35s,opacity .35s,margin .35s}
-  .card.open p{max-height:140px;opacity:.92;margin:6px 0 10px}
-  .card .go{display:none}
-  .card.open .go{display:inline-block}
-  .foot{color:var(--sage);font-size:12px;text-align:center;margin-top:30px}
-  @media (max-width:700px){.row{grid-template-columns:1fr 60px}.row .track{grid-column:1/-1;order:3}.split{grid-template-columns:1fr}}
-  @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+:root{--bg:#EEF2EA;--panel:#E3EADF;--card:#F7F9F4;--ink:#26372D;--muted:#6B7D63;--accent:#5E7352;--line:rgba(124,146,121,.35);
+  --health:#6F8E96;--env:#7C9279;--agents:#B58B6B;--bar:#A2B5A0;--shadow:0 1px 0 rgba(38,55,45,.04),0 8px 24px -12px rgba(38,55,45,.25);
+  --serif:Georgia,'Times New Roman',serif;--sans:-apple-system,'Segoe UI',Helvetica,Arial,sans-serif}
+:root[data-theme=dark]{--bg:#14291d;--panel:#1B3527;--card:#244433;--ink:#F4EEE0;--muted:#A2B5A0;--accent:#DCC8A3;--line:rgba(162,181,160,.22);
+  --health:#7FA3AE;--env:#8FA56A;--agents:#DCC8A3;--bar:#6B7F4E;--shadow:0 8px 24px -12px rgba(0,0,0,.6)}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#14291d;--panel:#1B3527;--card:#244433;--ink:#F4EEE0;--muted:#A2B5A0;--accent:#DCC8A3;--line:rgba(162,181,160,.22);
+  --health:#7FA3AE;--env:#8FA56A;--agents:#DCC8A3;--bar:#6B7F4E;--shadow:0 8px 24px -12px rgba(0,0,0,.6)}}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 var(--sans);transition:background .3s,color .3s}
+.wrap{max-width:1080px;margin:0 auto;padding:36px 22px 90px}
+a{color:inherit}
+header{display:flex;justify-content:space-between;gap:20px;align-items:flex-start;flex-wrap:wrap;padding-bottom:26px}
+.eyebrow{font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--muted)}
+h1{font:400 clamp(32px,5.5vw,50px)/1.1 var(--serif);color:var(--accent);margin:10px 0 8px}
+.tag{font:italic 20px var(--serif);margin:0;opacity:.92}
+.links{margin-top:14px;display:flex;gap:18px;flex-wrap:wrap;font-size:14px}
+.links a{color:var(--muted);text-decoration:none;border-bottom:1px solid var(--line)}
+.links a:hover{color:var(--accent);border-color:var(--accent)}
+.theme{border:1px solid var(--line);background:none;color:var(--muted);border-radius:99px;padding:7px 14px;font:13px var(--sans);cursor:pointer}
+.theme:hover{color:var(--accent);border-color:var(--accent)}
+h2{font:400 26px var(--serif);color:var(--accent);margin:0 0 4px}
+.sub{color:var(--muted);font-size:13px;margin:0 0 18px}
+section{margin-bottom:44px}
+.bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:12px}
+.search{flex:1 1 220px;min-width:180px;background:var(--card);border:1px solid var(--line);color:var(--ink);border-radius:12px;padding:10px 14px;font:14px var(--sans)}
+.search:focus{outline:2px solid var(--accent);outline-offset:1px}
+select{background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:12px;padding:10px 12px;font:13px var(--sans)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 10px}
+.chip{border:1px solid var(--line);background:none;color:var(--muted);padding:6px 13px;border-radius:99px;font:13px var(--sans);cursor:pointer;transition:.2s;display:inline-flex;align-items:center;gap:7px}
+.chip:hover{color:var(--accent);border-color:var(--accent)}
+.chip[aria-pressed=true]{background:var(--accent);color:var(--bg);border-color:var(--accent)}
+.chip i{width:8px;height:8px;border-radius:50%;display:inline-block}
+.chip em{font-style:normal;opacity:.7;font-size:12px}
+.chips.small .chip{padding:4px 10px;font-size:12px}
+.count{color:var(--muted);font-size:12.5px;margin:6px 0 14px}
+.explorer{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:22px;align-items:start}
+.list{display:grid;gap:10px}
+.item{all:unset;box-sizing:border-box;cursor:pointer;display:grid;grid-template-columns:1fr auto;gap:2px 14px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px 14px 20px;position:relative;transition:transform .2s,border-color .2s,box-shadow .2s}
+.item:before{content:"";position:absolute;left:0;top:14px;bottom:14px;width:3px;border-radius:2px;background:var(--f)}
+.item:hover{transform:translateX(3px);border-color:var(--accent)}
+.item:focus-visible{outline:2px solid var(--accent)}
+.item[aria-selected=true]{border-color:var(--accent);box-shadow:var(--shadow);transform:translateX(6px)}
+.item .nm{font:400 18px var(--serif);color:var(--ink)}
+.item .mt{font:400 18px var(--serif);color:var(--accent);text-align:right;white-space:nowrap}
+.item .dt{font-size:12px;color:var(--muted)}
+.item .tg{font-size:11.5px;color:var(--muted);text-align:right}
+.empty{padding:26px;border:1px dashed var(--line);border-radius:14px;color:var(--muted);text-align:center}
+.detail{position:sticky;top:18px;background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:26px 26px 22px;min-height:340px;box-shadow:var(--shadow)}
+.detail.in>*{animation:rise .38s both}
+.detail.in>*:nth-child(2){animation-delay:.04s}.detail.in>*:nth-child(3){animation-delay:.08s}.detail.in>*:nth-child(4){animation-delay:.12s}.detail.in>*:nth-child(5){animation-delay:.16s}
+@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.field{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:8px}
+.field i{width:8px;height:8px;border-radius:50%;background:var(--f)}
+.detail h3{font:400 28px/1.15 var(--serif);color:var(--accent);margin:8px 0 2px}
+.when{font-size:12.5px;color:var(--muted)}
+.big{margin:18px 0 6px;padding:14px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.big b{display:block;font:400 40px/1.1 var(--serif);color:var(--accent)}
+.big span{font-size:13px;color:var(--muted)}
+.detail p{margin:14px 0}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 18px}
+.tags button{border:1px solid var(--line);background:none;color:var(--muted);border-radius:99px;padding:3px 10px;font:12px var(--sans);cursor:pointer}
+.tags button:hover{color:var(--accent);border-color:var(--accent)}
+.btns{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.btn{background:var(--accent);color:var(--bg);text-decoration:none;border-radius:10px;padding:9px 16px;font-size:13.5px;transition:.2s}
+.btn:hover{filter:brightness(1.08);transform:translateY(-1px)}
+.btn.alt{background:none;color:var(--accent);border:1px solid var(--accent)}
+.nav{margin-left:auto;display:flex;gap:6px}
+.nav button{border:1px solid var(--line);background:none;color:var(--muted);width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:15px}
+.nav button:hover{color:var(--accent);border-color:var(--accent)}
+.hint{font-size:11.5px;color:var(--muted);margin-top:14px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:26px 28px}
+.grp{margin:0 0 20px;transition:opacity .35s}.grp.dim{opacity:.25}
+.grp h4{font:italic 16px var(--serif);color:var(--muted);margin:0 0 8px;font-weight:400}
+.row{display:grid;grid-template-columns:230px 1fr 76px;gap:14px;align-items:center;padding:6px 0}
+.row .lab{font-size:13px}
+.track{height:8px;border-radius:4px;background:rgba(127,127,127,.18);overflow:hidden}
+.fill{height:100%;width:0;border-radius:4px;background:var(--bar);transition:width 1.3s cubic-bezier(.2,.8,.2,1)}
+.fill.hi{background:var(--accent)}
+.val{font:18px var(--serif);text-align:right}
+.tip{position:fixed;pointer-events:none;background:var(--ink);color:var(--bg);padding:8px 11px;border-radius:9px;font-size:12.5px;max-width:260px;opacity:0;transition:opacity .15s;z-index:20}
+.tl{width:100%;height:auto;overflow:visible}
+.dot{cursor:pointer}.dot circle.c{transition:r .2s}.dot:hover circle.c{r:9}
+.split{display:grid;grid-template-columns:250px 1fr;gap:28px;align-items:center}
+.legend{display:grid;gap:4px}
+.lg{display:flex;align-items:center;gap:10px;padding:6px 8px;border-radius:8px;font-size:13.5px;transition:.2s}
+.lg:hover,.lg.on{background:rgba(127,127,127,.12)}
+.lg i{width:9px;height:9px;border-radius:50%}
+.lg b{margin-left:auto;font-weight:500;color:var(--accent)}
+.lg small{color:var(--muted);width:60px;text-align:right}
+.foot{color:var(--muted);font-size:12px;text-align:center;margin-top:30px}
+@media (max-width:860px){.explorer{grid-template-columns:1fr}.detail{position:static;order:-1}.split{grid-template-columns:1fr}.row{grid-template-columns:1fr 70px}.row .track{grid-column:1/-1;order:3}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <header>
+<header>
+  <div>
     <div class="eyebrow">M.S. Robotics &amp; Autonomous Systems (AI) · Arizona State University</div>
     <h1>Reshma Panibhate (Ray)</h1>
     <p class="tag">AI that sees, reasons, and acts for people and the planet.</p>
-    <div class="rule"></div>
     <div class="links"><a href="https://github.com/ray021207">GitHub</a><a href="https://ray021207.github.io">Portfolio</a><a href="https://www.linkedin.com/in/reshmapanibhate">LinkedIn</a></div>
-  </header>
+  </div>
+  <button class="theme" id="theme" aria-label="Toggle light or dark theme">Dark mode</button>
+</header>
 
-  <div class="chips" id="chips" role="group" aria-label="Filter by field"></div>
+<section id="projects">
+  <h2>Projects</h2>
+  <p class="sub">Search, filter by field or tool, and click a project to open its story and its number.</p>
+  <div class="bar"><input class="search" id="q" type="search" placeholder="Search projects, tools, results…" aria-label="Search projects">
+    <select id="sort" aria-label="Sort projects"><option value="new">Newest first</option><option value="old">Oldest first</option><option value="field">Grouped by field</option></select></div>
+  <div class="chips" id="fields" role="group" aria-label="Filter by field"></div>
+  <div class="chips small" id="tagchips" role="group" aria-label="Filter by tool"></div>
+  <div class="count" id="count" aria-live="polite"></div>
+  <div class="explorer">
+    <div class="list" id="list" role="listbox" aria-label="Projects"></div>
+    <aside class="detail" id="detail" aria-live="polite"></aside>
+  </div>
+</section>
 
-  <section aria-labelledby="r">
-    <h2 id="r">Numbers I stand behind</h2>
-    <p class="sub">Hover a bar for the detail. Every stage ends in a measurement, including the ones that went the wrong way.</p>
-    <div id="bars"></div>
-  </section>
+<section aria-labelledby="r">
+  <h2 id="r">Numbers I stand behind</h2>
+  <p class="sub">Hover a bar for detail. Every stage ends in a measurement, including the ones that went the wrong way.</p>
+  <div class="panel" id="bars"></div>
+</section>
 
-  <section aria-labelledby="t">
-    <h2 id="t">A year and a half, in order</h2>
-    <p class="sub">Click a point. Projects by last push, January 2025 to November 2026.</p>
-    <svg class="tl" id="tl" viewBox="0 0 940 150" role="img" aria-label="Project timeline"></svg>
-    <div class="detail" id="detail"></div>
-  </section>
+<section aria-labelledby="t">
+  <h2 id="t">A year and a half, in order</h2>
+  <p class="sub">Click a point to jump to that project above.</p>
+  <div class="panel"><svg class="tl" id="tl" viewBox="0 0 940 150" role="img" aria-label="Project timeline"></svg></div>
+</section>
 
-  <section aria-labelledby="l">
-    <h2 id="l">What I write in</h2>
-    <p class="sub">Source files by language across <span id="nrepos"></span> public repos. Counted, not guessed. Hover a slice or a name.</p>
-    <div class="split"><svg id="donut" viewBox="0 0 220 220" width="240" height="240" role="img" aria-label="Language mix"></svg><div class="legend" id="legend"></div></div>
-  </section>
-
-  <section aria-labelledby="p">
-    <h2 id="p">Selected work</h2>
-    <p class="sub">Click a card to open it. The chips above filter everything on this page.</p>
-    <div class="grid" id="grid"></div>
-  </section>
-  <div class="foot">Open to perception, computer vision &amp; ML roles · Tempe, AZ · open to relocation</div>
+<section aria-labelledby="l">
+  <h2 id="l">What I write in</h2>
+  <p class="sub">Source files by language across <span id="nrepos"></span> public repos. Counted, not guessed.</p>
+  <div class="panel"><div class="split"><svg id="donut" viewBox="0 0 220 220" width="240" height="240" role="img" aria-label="Language mix"></svg><div class="legend" id="legend"></div></div></div>
+</section>
+<div class="foot">Open to perception, computer vision &amp; ML roles · Tempe, AZ · open to relocation</div>
 </div>
 <div class="tip" id="tip"></div>
 <script>
-const DATA = {"projects": [{"id": "fruit", "name": "Fruit grading", "field": "health", "date": "2025-01", "label": "Jan 2025", "link": "https://github.com/ray021207/fruit-grading-system", "blurb": "Deployed CNN pipeline that grades fruit condition from a photo. My undergraduate thesis, published first-author in IOSR-JCE.", "tags": ["TensorFlow", "InceptionV3", "Flask"]}, {"id": "injury", "name": "Athlete injury risk", "field": "health", "date": "2025-05", "label": "May 2025", "link": "https://github.com/ray021207/Comparative-Study-of-Approaches-for-Injury-Risk-Prediction-in-Athletes", "blurb": "Five models on 50 Hz wearable data. One scored 100%, which turned out to be a leak: windows from the same subject sat on both sides of the split.", "tags": ["1D CNN", "MHEALTH", "Random Forest"]}, {"id": "chexpert", "name": "CheXpert + medical imaging", "field": "health", "date": "2025-12", "label": "Dec 2025", "link": "https://github.com/ray021207/CSE507_CheXpert_InternImage", "blurb": "Multi-label chest X-ray classification on 174k radiographs, plus nine hands-on imaging exercises (U-Net, autoencoder, clustering).", "tags": ["PyTorch", "InternImage", "CheXpert"]}, {"id": "clarity", "name": "Clarity", "field": "agents", "date": "2026-03", "label": "Mar 2026", "link": "https://github.com/ray021207/Clarity", "blurb": "Intercepts LLM calls and returns a 0 to 100 trust score from a multi-agent verification pipeline.", "tags": ["LangGraph", "FastAPI", "Anthropic SDK"]}, {"id": "recoveryiq", "name": "RecoveryIQ", "field": "health", "date": "2026-04", "label": "Apr 2026", "link": "https://github.com/ray021207/GlobeHack_Hydrawav3_RecoveryIQ", "blurb": "Dual-role recovery platform: patients get ROM scans and check-ins, practitioners get assessments and AI clinical summaries.", "tags": ["Next.js 16", "TypeScript", "Pose detection"]}, {"id": "wastewise", "name": "WasteWise", "field": "env", "date": "2026-09a", "label": "Sep 2026", "link": "https://github.com/ray021207/WasteWise", "blurb": "Snap an item; Claude reasons about it and returns disposal rules for your own city. Built at the Visual AI Hackathon @ ASU.", "tags": ["Claude", "FiftyOne", "Python"]}, {"id": "glacious", "name": "Glacious", "field": "env", "date": "2026-09b", "label": "Sep 2026", "link": "https://github.com/ray021207/Glacious", "blurb": "Satellite climate intelligence for Alpine journalists: verify climate claims against satellite evidence.", "tags": ["Streamlit", "Plotly", "Folium"]}, {"id": "species", "name": "Native vs invasive", "field": "env", "date": "2026-09c", "label": "Sep 2026", "link": "https://github.com/ray021207/Comparitive-Study-for-Native-Invasive-species", "blurb": "BioCLIP, SpeciesNet and DINOv2 compared, then tested on Hawai'i, an island ecosystem none of them had seen.", "tags": ["BioCLIP", "SpeciesNet", "DINOv2", "FAISS"]}, {"id": "kind", "name": "kin&d", "field": "agents", "date": "2026-10", "label": "Oct 2026", "link": "https://github.com/ray021207/HacksForHumanity", "blurb": "A parent describes a moment and gets 3 to 5 conversation starters. No chat, by design.", "tags": ["Next.js", "TypeScript", "Claude API"]}, {"id": "sink", "name": "Sinkronized", "field": "env", "date": "2026-11", "label": "Nov 2026", "link": "https://github.com/ray021207/NASA-Hackathon", "blurb": "NASA Space Apps 2026. NISAR L-band radar measures where central Arizona is sinking, and what sits on top.", "tags": ["NISAR", "InSAR", "Python"]}, {"id": "grapheqa", "name": "GraphEQA", "field": "agents", "date": null, "label": "2026", "link": "https://ray021207.github.io/projects/graph-eqa.html", "blurb": "An agent explores a house it has never seen and answers questions about it. Baseline was confidently wrong in 59% of runs.", "tags": ["PyTorch", "Habitat Sim", "SigLIP2", "Claude API"]}, {"id": "webarena", "name": "LLM agent evaluation", "field": "agents", "date": null, "label": "2024", "link": "https://ray021207.github.io/projects/webarena-deontic.html", "blurb": "Added must / may / must-not rules to WebArena and measured where GPT-4o breaks them.", "tags": ["WebArena", "GPT-4o", "Agent eval"]}], "results": [{"group": "Native vs invasive species (accuracy)", "field": "env", "rows": [{"label": "Majority-class baseline", "v": 60.0, "max": 100, "fmt": "60.0%", "tip": "Always guessing the commonest label."}, {"label": "BioCLIP, zero-shot", "v": 84.2, "max": 100, "fmt": "84.2%", "tip": "Country-restricted lookup with a hand-curated native/invasive table."}, {"label": "SpeciesNet, fine-tuned head", "v": 97.34, "max": 100, "fmt": "97.34%", "hi": true, "tip": "+13.1 points over BioCLIP on the validation pass."}]}, {"group": "Chest X-ray, 174k radiographs (AUROC)", "field": "health", "rows": [{"label": "DINOv2 localisation head", "v": 0.48, "max": 1, "fmt": "≈ 0.48", "tip": "Reported as is: it underperforms."}, {"label": "Multi-label classifier", "v": 0.8, "max": 1, "fmt": "≈ 0.80", "hi": true, "tip": "Stable under a patient-level 80/20 split, where the official split misleads."}]}, {"group": "Agents and robots", "field": "agents", "rows": [{"label": "Baseline confidently wrong", "v": 59, "max": 100, "fmt": "59%", "tip": "Share of baseline embodied-QA episodes answered confidently wrong (GraphEQA)."}, {"label": "Path efficiency gain", "v": 20, "max": 100, "fmt": "~20%", "hi": true, "tip": "A*-progress reward shaping on a TurtleBot in Gazebo."}]}], "langs": [{"name": "TypeScript", "files": 127}, {"name": "Python", "files": 90}, {"name": "HTML / CSS", "files": 17}, {"name": "JavaScript", "files": 11}, {"name": "Jupyter", "files": 2}, {"name": "Shell", "files": 2}], "repos": 12};
+const P=[
+{id:"fruit",name:"Fruit grading",field:"health",sk:"2025-01",date:"2025-01",label:"Jan 2025",metric:"Published",ml:"first-author paper, IOSR-JCE",link:"https://github.com/ray021207/fruit-grading-system",blurb:"Deployed CNN pipeline that grades fruit condition from a photo. My undergraduate thesis, published first-author in IOSR-JCE.",tags:["TensorFlow","InceptionV3","Flask"]},
+{id:"injury",name:"Athlete injury risk",field:"health",sk:"2025-05",date:"2025-05",label:"May 2025",metric:"100%",ml:"one model's score, which turned out to be a data leak",link:"https://github.com/ray021207/Comparative-Study-of-Approaches-for-Injury-Risk-Prediction-in-Athletes",blurb:"Five models on 50 Hz wearable data. One scored 100%, which turned out to be a leak: windows from the same subject sat on both sides of the split.",tags:["1D CNN","MHEALTH","Random Forest"]},
+{id:"chexpert",name:"CheXpert + medical imaging",field:"health",sk:"2025-12",date:"2025-12",label:"Dec 2025",metric:"≈ 0.80",ml:"AUROC, stable under a patient-level split",link:"https://github.com/ray021207/CSE507_CheXpert_InternImage",link2:["Imaging exercises","https://github.com/ray021207/Medical_Image_processing"],blurb:"Multi-label chest X-ray classification on 174k radiographs, plus nine hands-on imaging exercises (U-Net, autoencoder, clustering).",tags:["PyTorch","InternImage","CheXpert","U-Net"]},
+{id:"clarity",name:"Clarity",field:"agents",sk:"2026-03",date:"2026-03",label:"Mar 2026",metric:"0–100",ml:"trust score returned for every LLM call",link:"https://github.com/ray021207/Clarity",blurb:"Intercepts LLM calls and returns a 0 to 100 trust score from a multi-agent verification pipeline.",tags:["LangGraph","FastAPI","Anthropic SDK","Claude API"]},
+{id:"recoveryiq",name:"RecoveryIQ",field:"health",sk:"2026-04",date:"2026-04",label:"Apr 2026",metric:"2 roles",ml:"patients and practitioners, one platform",link:"https://github.com/ray021207/GlobeHack_Hydrawav3_RecoveryIQ",blurb:"Dual-role recovery platform: patients get ROM scans and check-ins, practitioners get assessments and AI clinical summaries.",tags:["Next.js","TypeScript","Pose detection"]},
+{id:"wastewise",name:"WasteWise",field:"env",sk:"2026-09a",date:"2026-09a",label:"Sep 2026",metric:"Local rules",ml:"disposal guidance for your own city",link:"https://github.com/ray021207/WasteWise",blurb:"Snap an item; Claude reasons about it and returns disposal rules for your own city. Built at the Visual AI Hackathon @ ASU.",tags:["Claude API","FiftyOne","Python"]},
+{id:"glacious",name:"Glacious",field:"env",sk:"2026-09b",date:"2026-09b",label:"Sep 2026",metric:"Live",ml:"deployed Streamlit dashboard",link:"https://github.com/ray021207/Glacious",live:"https://glacious.streamlit.app/",blurb:"Satellite climate intelligence for Alpine journalists: verify climate claims against satellite evidence.",tags:["Streamlit","Plotly","Folium","Python"]},
+{id:"species",name:"Native vs invasive",field:"env",sk:"2026-09c",date:"2026-09c",label:"Sep 2026",metric:"97.34%",ml:"accuracy, SpeciesNet with a fine-tuned head",link:"https://github.com/ray021207/Comparitive-Study-for-Native-Invasive-species",blurb:"BioCLIP, SpeciesNet and DINOv2 compared, then tested on Hawai'i, an island ecosystem none of them had seen.",tags:["BioCLIP","SpeciesNet","DINOv2","FAISS","Python"]},
+{id:"kind",name:"kin&d",field:"agents",sk:"2026-10",date:"2026-10",label:"Oct 2026",metric:"3 to 5",ml:"conversation starters per moment, no chat by design",link:"https://github.com/ray021207/HacksForHumanity",blurb:"A parent describes a moment and gets 3 to 5 conversation starters. No chat, by design.",tags:["Next.js","TypeScript","Claude API"]},
+{id:"sink",name:"Sinkronized",field:"env",sk:"2026-11",date:"2026-11",label:"Nov 2026",metric:"0.98–0.99",ml:"correlation with ADWR subsidence rates, SE Arizona",link:"https://github.com/ray021207/NASA-Hackathon",live:"https://sinkronized.vercel.app",blurb:"NASA Space Apps 2026. NISAR L-band radar measures where central Arizona is sinking, and what sits on top.",tags:["NISAR","InSAR","Python"]},
+{id:"grapheqa",name:"GraphEQA",field:"agents",sk:"2026-05",date:null,label:"Mar–May 2026",metric:"59%",ml:"of baseline episodes were confidently wrong",link:"https://ray021207.github.io/projects/graph-eqa.html",blurb:"An agent explores a house it has never seen and answers questions about it. Baseline was confidently wrong in 59% of runs.",tags:["PyTorch","Habitat Sim","SigLIP2","Claude API"]},
+{id:"webarena",name:"LLM agent evaluation",field:"agents",sk:"2024-12",date:null,label:"Sep–Dec 2024",metric:"GPT-4o",ml:"tested against must / may / must-not rules",link:"https://ray021207.github.io/projects/webarena-deontic.html",blurb:"Added must / may / must-not rules to WebArena and measured where GPT-4o breaks them.",tags:["WebArena","GPT-4o","Agent eval"]}];
+const R=[{group:"Native vs invasive species (accuracy)",field:"env",rows:[{l:"Majority-class baseline",v:60,m:100,f:"60.0%",t:"Always guessing the commonest label."},{l:"BioCLIP, zero-shot",v:84.2,m:100,f:"84.2%",t:"Country-restricted lookup with a hand-curated native/invasive table."},{l:"SpeciesNet, fine-tuned head",v:97.34,m:100,f:"97.34%",hi:1,t:"+13.1 points over BioCLIP on the validation pass."}]},
+{group:"Chest X-ray, 174k radiographs (AUROC)",field:"health",rows:[{l:"DINOv2 localisation head",v:.48,m:1,f:"≈ 0.48",t:"Reported as is: it underperforms."},{l:"Multi-label classifier",v:.8,m:1,f:"≈ 0.80",hi:1,t:"Stable under a patient-level 80/20 split, where the official split misleads."}]},
+{group:"Agents and robots",field:"agents",rows:[{l:"Baseline confidently wrong",v:59,m:100,f:"59%",t:"Share of baseline embodied-QA episodes answered confidently wrong (GraphEQA)."},{l:"Path efficiency gain",v:20,m:100,f:"~20%",hi:1,t:"A*-progress reward shaping on a TurtleBot in Gazebo."}]}];
+const LANGS=[["TypeScript",127],["Python",90],["HTML / CSS",17],["JavaScript",11],["Jupyter",2],["Shell",2]],REPOS=12;
 const FIELDS=[["all","All"],["health","Health & medical AI"],["env","Environment & sustainability"],["agents","LLM & agent products"]];
+const FN=Object.fromEntries(FIELDS);
 const COL={health:"var(--health)",env:"var(--env)",agents:"var(--agents)"};
-const LCOL=["#5E7352","#A2B5A0","#D9C7A0","#6F8E96","#B58B6B","#7C9279"];
-let field="all", sel="sinkronized-default";
-const $=s=>document.querySelector(s), tip=$("#tip");
-const el=(t,a={},h="")=>{const e=document.createElement(t);for(const k in a)e.setAttribute(k,a[k]);e.innerHTML=h;return e};
-const showTip=(e,t)=>{tip.textContent=t;tip.style.opacity=1;const x=Math.min(e.clientX+14,innerWidth-280);tip.style.left=x+"px";tip.style.top=(e.clientY+14)+"px"};
-const hideTip=()=>tip.style.opacity=0;
+const st={field:"all",tags:new Set(),q:"",sort:"new",sel:"sink"};
+const $=s=>document.querySelector(s),tip=$("#tip");
+const esc=s=>String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;");
+const NS="http://www.w3.org/2000/svg";
+const mk=(t,a,x)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);if(x)e.textContent=x;return e};
 
-/* chips */
-FIELDS.forEach(([k,l])=>{const b=el("button",{class:"chip","aria-pressed":k===field,"data-k":k},(k==="all"?"":`<i style="background:${COL[k]}"></i>`)+l);
-  b.onclick=()=>{field=k;document.querySelectorAll(".chip").forEach(c=>c.setAttribute("aria-pressed",c.dataset.k===k));render()};$("#chips").append(b)});
-
-/* bars */
+function visible(){
+  const q=st.q.trim().toLowerCase();
+  let a=P.filter(p=>(st.field==="all"||p.field===st.field)&&(!st.tags.size||p.tags.some(t=>st.tags.has(t)))&&
+    (!q||(p.name+" "+p.blurb+" "+p.tags.join(" ")+" "+p.metric+" "+p.ml+" "+FN[p.field]).toLowerCase().includes(q)));
+  a.sort((x,y)=>st.sort==="old"?x.sk.localeCompare(y.sk):st.sort==="field"?x.field.localeCompare(y.field)||y.sk.localeCompare(x.sk):y.sk.localeCompare(x.sk));
+  return a;
+}
+function chips(){
+  const f=$("#fields");f.innerHTML="";
+  FIELDS.forEach(([k,l])=>{const n=k==="all"?P.length:P.filter(p=>p.field===k).length;
+    const b=document.createElement("button");b.className="chip";b.setAttribute("aria-pressed",st.field===k);
+    b.innerHTML=(k==="all"?"":`<i style="background:${COL[k]}"></i>`)+esc(l)+` <em>${n}</em>`;
+    b.onclick=()=>{st.field=k;render()};f.append(b)});
+  const cnt={};P.forEach(p=>p.tags.forEach(t=>cnt[t]=(cnt[t]||0)+1));
+  const t=$("#tagchips");t.innerHTML="";
+  Object.entries(cnt).filter(([k,n])=>n>1||st.tags.has(k)).sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0])).forEach(([k,n])=>{
+    const b=document.createElement("button");b.className="chip";b.setAttribute("aria-pressed",st.tags.has(k));b.innerHTML=esc(k)+` <em>${n}</em>`;
+    b.onclick=()=>{st.tags.has(k)?st.tags.delete(k):st.tags.add(k);render()};t.append(b)});
+  if(st.tags.size||st.q||st.field!=="all"){const c=document.createElement("button");c.className="chip";c.textContent="Clear filters";c.onclick=()=>{st.field="all";st.tags.clear();st.q="";$("#q").value="";render()};t.append(c)}
+}
+function list(){
+  const v=visible(),box=$("#list");box.innerHTML="";
+  $("#count").textContent=`Showing ${v.length} of ${P.length} projects`;
+  if(!v.length){box.innerHTML='<div class="empty">Nothing matches. Try clearing a filter.</div>';return v}
+  if(!v.some(p=>p.id===st.sel))st.sel=v[0].id;
+  v.forEach(p=>{
+    const b=document.createElement("button");b.className="item";b.id="i-"+p.id;b.style.setProperty("--f",COL[p.field]);b.setAttribute("role","option");b.setAttribute("aria-selected",p.id===st.sel);
+    b.innerHTML=`<span class="nm">${esc(p.name)}</span><b class="mt">${esc(p.metric)}</b><span class="dt">${esc(p.label)} · ${esc(FN[p.field])}</span><span class="tg">${esc(p.tags.slice(0,2).join(" · "))}</span>`;
+    b.onclick=()=>choose(p.id);box.append(b)});
+  return v;
+}
+function detail(v){
+  const p=P.find(x=>x.id===st.sel),box=$("#detail");
+  if(!p||!v.length){box.innerHTML='<div class="empty">Pick a project to see its story.</div>';return}
+  const i=v.findIndex(x=>x.id===p.id);
+  box.style.setProperty("--f",COL[p.field]);box.classList.remove("in");void box.offsetWidth;
+  box.innerHTML=`<div class="field"><i></i>${esc(FN[p.field])}</div><div><h3>${esc(p.name)}</h3><div class="when">${esc(p.label)}</div></div>
+  <div class="big"><b>${esc(p.metric)}</b><span>${esc(p.ml)}</span></div>
+  <div><p>${esc(p.blurb)}</p><div class="tags">${p.tags.map(t=>`<button data-t="${esc(t)}">${esc(t)}</button>`).join("")}</div></div>
+  <div class="btns"><a class="btn" href="${p.link}">${p.link.includes("github.com")?"View code":"Read case study"} ↗</a>${p.live?`<a class="btn alt" href="${p.live}">Live demo ↗</a>`:""}${p.link2?`<a class="btn alt" href="${p.link2[1]}">${p.link2[0]} ↗</a>`:""}
+  <div class="nav"><button id="prev" aria-label="Previous project">←</button><button id="next" aria-label="Next project">→</button></div></div>
+  <div class="hint">Tip: use ↑ ↓ or ← → to move through the list.</div>`;
+  box.classList.add("in");
+  box.querySelectorAll(".tags button").forEach(b=>b.onclick=()=>{st.tags.add(b.dataset.t);render()});
+  $("#prev").onclick=()=>choose(v[(i-1+v.length)%v.length].id);$("#next").onclick=()=>choose(v[(i+1)%v.length].id);
+}
+function choose(id,scroll){
+  st.sel=id;history.replaceState(null,"","#p-"+id);
+  if(!visible().some(p=>p.id===id)){st.field="all";st.tags.clear();st.q="";$("#q").value=""}
+  render();
+  if(scroll||innerWidth<=860)$("#detail").scrollIntoView({behavior:"smooth",block:"nearest"});
+}
 function bars(){
   const box=$("#bars");box.innerHTML="";
-  DATA.results.forEach(g=>{
-    const d=el("div",{class:"grp"+(field!=="all"&&g.field!==field?" dim":"")},`<h3>${g.group}</h3>`);
+  R.forEach(g=>{
+    const d=document.createElement("div");d.className="grp"+(st.field!=="all"&&g.field!==st.field?" dim":"");d.innerHTML=`<h4>${g.group}</h4>`;
     g.rows.forEach(r=>{
-      const row=el("div",{class:"row"},`<div class="lab">${r.label}</div><div class="track"><div class="fill${r.hi?" hi":""}"></div></div><div class="val">${r.fmt}</div>`);
-      row.onmousemove=e=>showTip(e,r.tip);row.onmouseleave=hideTip;d.append(row);
-      requestAnimationFrame(()=>requestAnimationFrame(()=>row.querySelector(".fill").style.width=(100*r.v/r.max)+"%"));
-    });box.append(d)});
+      const row=document.createElement("div");row.className="row";
+      row.innerHTML=`<div class="lab">${r.l}</div><div class="track"><div class="fill${r.hi?" hi":""}"></div></div><div class="val">${r.f}</div>`;
+      row.onmousemove=e=>{tip.textContent=r.t;tip.style.opacity=1;tip.style.left=Math.min(e.clientX+14,innerWidth-280)+"px";tip.style.top=e.clientY+14+"px"};
+      row.onmouseleave=()=>tip.style.opacity=0;d.append(row);
+      requestAnimationFrame(()=>requestAnimationFrame(()=>row.querySelector(".fill").style.width=100*r.v/r.m+"%"))});
+    box.append(d)});
 }
-
-/* timeline */
 function timeline(){
-  const items=DATA.projects.filter(p=>p.date).sort((a,b)=>a.date.localeCompare(b.date));
-  const svg=$("#tl");svg.innerHTML="";const ns="http://www.w3.org/2000/svg";
-  const mk=(t,a,h)=>{const e=document.createElementNS(ns,t);for(const k in a)e.setAttribute(k,a[k]);if(h)e.textContent=h;return e};
-  svg.append(mk("line",{x1:30,y1:75,x2:910,y2:75,stroke:"#7C9279","stroke-opacity":.5,"stroke-width":1.5}));
+  const items=P.filter(p=>p.date).sort((a,b)=>a.sk.localeCompare(b.sk)),svg=$("#tl");svg.innerHTML="";
+  svg.append(mk("line",{x1:30,y1:75,x2:910,y2:75,style:"stroke:var(--line);stroke-width:1.5"}));
   items.forEach((p,i)=>{
-    const x=50+(840)*i/(items.length-1),side=i%2?-1:1,on=field==="all"||p.field===field,act=p.id===sel;
-    const g=mk("g",{class:"dot",opacity:on?1:.18,tabindex:0,role:"button","aria-label":p.name});
-    g.append(mk("rect",{x:x-46,y:side>0?58:2,width:92,height:90,fill:"transparent"}));
-    g.append(mk("line",{x1:x,y1:75,x2:x,y2:75+side*18,stroke:"#7C9279","stroke-opacity":.6}));
-    g.append(mk("circle",{class:"c",cx:x,cy:75,r:act?8:5.5,fill:act?"#5E7352":"#DCE4D8",stroke:p.field==="health"?"#6F8E96":p.field==="env"?"#7C9279":"#B58B6B","stroke-width":2}));
-    g.append(mk("text",{x,y:75+side*38,"text-anchor":"middle","font-size":12.5,fill:"#26372D",style:"font-family:Georgia,serif"},p.name));
-    g.append(mk("text",{x,y:75+side*38+14,"text-anchor":"middle","font-size":10.5,fill:"#6B7D63"},p.label));
-    const pick=()=>{sel=p.id;timeline();detail()};g.onclick=pick;g.onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();pick()}};
-    svg.append(g)});
+    const x=50+840*i/(items.length-1),s=i%2?-1:1,act=p.id===st.sel,on=st.field==="all"||p.field===st.field;
+    const g=mk("g",{class:"dot",tabindex:0,role:"button","aria-label":p.name,style:`opacity:${on?1:.25}`});
+    g.append(mk("rect",{x:x-46,y:s>0?58:2,width:92,height:90,fill:"transparent"}));
+    g.append(mk("line",{x1:x,y1:75,x2:x,y2:75+s*18,style:"stroke:var(--line)"}));
+    g.append(mk("circle",{class:"c",cx:x,cy:75,r:act?8:5.5,style:`fill:${act?"var(--accent)":"var(--bg)"};stroke:${COL[p.field]};stroke-width:2`}));
+    g.append(mk("text",{x,y:75+s*38,"text-anchor":"middle","font-size":12.5,style:"fill:var(--ink);font-family:Georgia,serif"},p.name));
+    g.append(mk("text",{x,y:75+s*38+14,"text-anchor":"middle","font-size":10.5,style:"fill:var(--muted)"},p.label));
+    g.onclick=()=>choose(p.id,true);g.onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();choose(p.id,true)}};svg.append(g)});
 }
-function detail(){
-  const p=DATA.projects.find(x=>x.id===sel)||DATA.projects.find(x=>x.id==="sink");
-  $("#detail").innerHTML=`<h4>${p.name}</h4><div class="tags">${p.label} · ${p.tags.join(" · ")}</div><p>${p.blurb}</p><a class="go" href="${p.link}">Open ↗</a>`;
-}
-
-/* donut */
 function donut(){
-  const L=DATA.langs,tot=L.reduce((a,b)=>a+b.files,0),svg=$("#donut"),ns="http://www.w3.org/2000/svg",R=82,C=2*Math.PI*R;
-  svg.innerHTML="";$("#nrepos").textContent=DATA.repos;$("#legend").innerHTML="";
-  const center=document.createElementNS(ns,"text");center.setAttribute("x",110);center.setAttribute("y",112);center.setAttribute("text-anchor","middle");
-  center.setAttribute("fill","#5E7352");center.setAttribute("font-size","26");center.style.fontFamily="Georgia,serif";
-  const c2=document.createElementNS(ns,"text");c2.setAttribute("x",110);c2.setAttribute("y",132);c2.setAttribute("text-anchor","middle");c2.setAttribute("fill","#6B7D63");c2.setAttribute("font-size","11");
-  const reset=()=>{center.textContent=tot;c2.textContent="files";svg.querySelectorAll("circle.s").forEach(s=>s.style.opacity=1);document.querySelectorAll(".lg").forEach(x=>x.classList.remove("on"))};
+  const tot=LANGS.reduce((a,b)=>a+b[1],0),svg=$("#donut"),Rr=82,C=2*Math.PI*Rr,L=["var(--accent)","var(--bar)","var(--agents)","var(--health)","var(--env)","var(--muted)"];
+  svg.innerHTML="";$("#nrepos").textContent=REPOS;$("#legend").innerHTML="";
+  const c1=mk("text",{x:110,y:112,"text-anchor":"middle","font-size":26,style:"fill:var(--accent);font-family:Georgia,serif"}),c2=mk("text",{x:110,y:132,"text-anchor":"middle","font-size":11,style:"fill:var(--muted)"});
+  const reset=()=>{c1.textContent=tot;c2.textContent="files";svg.querySelectorAll("circle.s").forEach(s=>s.style.opacity=1);document.querySelectorAll(".lg").forEach(x=>x.classList.remove("on"))};
   let off=0;
-  L.forEach((l,i)=>{
-    const len=C*l.files/tot,s=document.createElementNS(ns,"circle");
-    s.setAttribute("class","s");s.setAttribute("cx",110);s.setAttribute("cy",110);s.setAttribute("r",R);s.setAttribute("fill","none");
-    s.setAttribute("stroke",LCOL[i]);s.setAttribute("stroke-width",22);s.setAttribute("stroke-dasharray",`0 ${C}`);s.setAttribute("stroke-dashoffset",-off);
-    s.setAttribute("transform","rotate(-90 110 110)");s.style.transition="stroke-dasharray 1.2s ease, opacity .2s";
-    setTimeout(()=>s.setAttribute("stroke-dasharray",`${Math.max(len-2,0.5)} ${C}`),80+i*120);
-    const lg=el("div",{class:"lg"},`<i style="background:${LCOL[i]}"></i>${l.name}<b>${Math.round(100*l.files/tot)}%</b><small>${l.files} files</small>`);
-    const on=()=>{reset();svg.querySelectorAll("circle.s").forEach((x,j)=>x.style.opacity=j===i?1:.25);lg.classList.add("on");center.textContent=Math.round(100*l.files/tot)+"%";c2.textContent=l.name};
-    s.onmouseenter=on;lg.onmouseenter=on;s.onmouseleave=reset;lg.onmouseleave=reset;
-    svg.append(s);$("#legend").append(lg);off+=len});
-  svg.append(center,c2);reset();
+  LANGS.forEach(([n,f],i)=>{
+    const len=C*f/tot,s=mk("circle",{class:"s",cx:110,cy:110,r:Rr,fill:"none","stroke-width":22,"stroke-dasharray":`0 ${C}`,"stroke-dashoffset":-off,transform:"rotate(-90 110 110)"});
+    s.style.stroke=L[i];s.style.transition="stroke-dasharray 1.2s ease, opacity .2s";setTimeout(()=>s.setAttribute("stroke-dasharray",`${Math.max(len-2,.5)} ${C}`),80+i*120);
+    const lg=document.createElement("div");lg.className="lg";lg.innerHTML=`<i style="background:${L[i]}"></i>${n}<b>${Math.round(100*f/tot)}%</b><small>${f} files</small>`;
+    const on=()=>{reset();svg.querySelectorAll("circle.s").forEach((x,j)=>x.style.opacity=j===i?1:.25);lg.classList.add("on");c1.textContent=Math.round(100*f/tot)+"%";c2.textContent=n};
+    s.onmouseenter=on;lg.onmouseenter=on;s.onmouseleave=reset;lg.onmouseleave=reset;svg.append(s);$("#legend").append(lg);off+=len});
+  svg.append(c1,c2);reset();
 }
-
-/* cards */
-function cards(){
-  const g=$("#grid");g.innerHTML="";
-  DATA.projects.forEach(p=>{
-    const on=field==="all"||p.field===field;
-    const c=el("div",{class:"card"+(on?"":" hide"),style:`--c:${COL[p.field]}`,tabindex:0,role:"button","aria-expanded":"false"},
-      `<h4>${p.name}</h4><div class="when">${p.label} · ${FIELDS.find(f=>f[0]===p.field)[1]}</div><p>${p.blurb}</p><div class="tags">${p.tags.join(" · ")}</div><a class="go" href="${p.link}" style="margin-top:8px">Open ↗</a>`);
-    const t=()=>{const o=c.classList.toggle("open");c.setAttribute("aria-expanded",o)};
-    c.onclick=e=>{if(e.target.tagName!=="A")t()};c.onkeydown=e=>{if(e.key==="Enter"){t()}};g.append(c)});
-}
-function render(){bars();timeline();detail();cards()}
-sel="sink";render();donut();
+function render(){chips();const v=list();detail(v);bars();timeline();$("#sort").value=st.sort}
+$("#q").oninput=e=>{st.q=e.target.value;render()};
+$("#sort").onchange=e=>{st.sort=e.target.value;render()};
+document.addEventListener("keydown",e=>{
+  if(/INPUT|SELECT|TEXTAREA/.test(document.activeElement.tagName))return;
+  const v=visible(),i=v.findIndex(p=>p.id===st.sel);if(!v.length)return;
+  const k=e.key;if(k==="ArrowDown"||k==="ArrowRight"){e.preventDefault();choose(v[(i+1)%v.length].id);$("#i-"+st.sel)?.focus({preventScroll:true})}
+  if(k==="ArrowUp"||k==="ArrowLeft"){e.preventDefault();choose(v[(i-1+v.length)%v.length].id);$("#i-"+st.sel)?.focus({preventScroll:true})}});
+const root=document.documentElement,tb=$("#theme");
+const dark=()=>root.dataset.theme?root.dataset.theme==="dark":matchMedia("(prefers-color-scheme:dark)").matches;
+const syncTheme=()=>{tb.textContent=dark()?"Light mode":"Dark mode"};
+tb.onclick=()=>{root.dataset.theme=dark()?"light":"dark";syncTheme()};
+const h=location.hash.slice(1);
+if(["health","env","agents"].includes(h))st.field=h;else if(h.startsWith("p-")&&P.some(p=>"p-"+p.id===h))st.sel=h.slice(2);
+syncTheme();render();donut();
 </script>
 </body>
 </html>
